@@ -8,6 +8,9 @@ public class Missile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Health health = collision.GetComponent<Health>();
+        if (health) health.TakeDamage(damage);
+
         Destroy(collision.gameObject);
     }
 }
