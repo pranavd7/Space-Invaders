@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] float maxHealth = 100f;
+    [SerializeField] public int maxHealth = 100;
     [SerializeField] ParticleSystem deathExplosion;
 
-    float currentHealth;
+    int currentHealth;
 
+    public Action<int> OnDamageEvent;
+    public Action<int> OnIncreaseHealthEvent;
     public Action OnDeathEvent;
 
     Animator animator;
@@ -21,7 +23,7 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
@@ -30,13 +32,15 @@ public class Health : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            OnDamageEvent?.Invoke(currentHealth);
             Die();
         }
     }
 
-    public void IncreaseHealth(float gain)
+    public void IncreaseHealth(int gain)
     {
         currentHealth = Mathf.Min(currentHealth + gain, maxHealth);
+        OnIncreaseHealthEvent?.Invoke(currentHealth);
     }
 
     void Die()
