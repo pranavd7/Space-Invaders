@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] Health playerHealth;
     [SerializeField] UIManager uiManager;
+    [SerializeField] EnemyManager enemyManager;
 
     int score;
 
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
 
         playerHealth.OnDamageEvent += uiManager.RefreshHealthUI;
         playerHealth.OnIncreaseHealthEvent += uiManager.RefreshHealthUI;
+
+        enemyManager.OnEnemyDeath += () => uiManager.RefreshScoreUI(++score);
     }
 
     /// <summary>

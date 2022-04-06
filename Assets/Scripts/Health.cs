@@ -23,26 +23,38 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    /// <summary>
+    /// Decrease the health by value
+    /// </summary>
+    /// <param name="damage"></param>
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
 
+        OnDamageEvent?.Invoke(currentHealth);
+
         if (animator) animator.SetTrigger("Hurt");
 
         if (currentHealth <= 0)
         {
-            OnDamageEvent?.Invoke(currentHealth);
             Die();
         }
     }
 
+    /// <summary>
+    /// Increase the health by value
+    /// </summary>
+    /// <param name="gain"></param>
     public void IncreaseHealth(int gain)
     {
         currentHealth = Mathf.Min(currentHealth + gain, maxHealth);
         OnIncreaseHealthEvent?.Invoke(currentHealth);
     }
 
+    /// <summary>
+    /// Play explosion particle effect, invoke OnDeathEvent then destroy this gameobject
+    /// </summary>
     void Die()
     {
         if (animator) animator.SetTrigger("Death");

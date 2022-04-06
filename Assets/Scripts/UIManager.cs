@@ -6,11 +6,11 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] GameObject heartPf;
-    [SerializeField] GameObject HealthParentObj;
+    [SerializeField] Transform healthParentObj;
 
     [SerializeField] TMP_Text scoreText;
 
-    GameObject[] hearts;
+    public GameObject[] hearts;
 
     /// <summary>
     /// Initialize the number of hearts for player
@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
         hearts = new GameObject[maxHealth];
         for (int i = 0; i < maxHealth; i++)
         {
-            hearts[i] = Instantiate(heartPf, transform);
+            hearts[i] = Instantiate(heartPf, healthParentObj);
         }
     }
 

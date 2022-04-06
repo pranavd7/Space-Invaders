@@ -5,18 +5,27 @@ using UnityEngine;
 public class Missile : MonoBehaviour
 {
     [SerializeField] int damage;
+    [SerializeField] string tagToCompare;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Health health = collision.GetComponent<Health>();
-        if (health) health.TakeDamage(damage);
+        if (collision.CompareTag(tagToCompare))
+        {
+            Health health = collision.GetComponent<Health>();
+            if (health) health.TakeDamage(damage);
 
-        Destroy(collision.gameObject);
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }
+        else if (collision.CompareTag("Missile"))
+        {
+            Destroy(gameObject);
+        }
     }
+
 
     private void OnBecameInvisible()
     {
+        //Destroy the object when out of the screen bounds
         Destroy(gameObject);
     }
 }
