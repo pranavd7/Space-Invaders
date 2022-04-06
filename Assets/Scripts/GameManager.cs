@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] Health playerHealth;
-    [SerializeField] HealthUI healthUI;
+    [SerializeField] UIManager uiManager;
+
+    int score;
 
     public static GameManager Instance;
 
@@ -17,15 +20,28 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        healthUI.Initialize((int)playerHealth.maxHealth);
+        uiManager.InitializeHealth((int)playerHealth.maxHealth);
+        uiManager.InitializeScore();
 
-        playerHealth.OnDamageEvent += healthUI.RefreshUI;
-        playerHealth.OnIncreaseHealthEvent += healthUI.RefreshUI;
+        playerHealth.OnDamageEvent += uiManager.RefreshHealthUI;
+        playerHealth.OnIncreaseHealthEvent += uiManager.RefreshHealthUI;
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Load a scene using the scene name
+    /// </summary>
+    /// <param name="level"></param>
+    public void LoadLevel(string level)
     {
+        SceneManager.LoadScene(level);
+    }
 
+    /// <summary>
+    /// Load a scene using the scene build index
+    /// </summary>
+    /// <param name="level"></param>
+    public void LoadLevel(int level)
+    {
+        SceneManager.LoadScene(level);
     }
 }

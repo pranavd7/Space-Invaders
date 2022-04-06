@@ -12,5 +12,11 @@ public class Missile : MonoBehaviour
         if (health) health.TakeDamage(damage);
 
         Destroy(collision.gameObject);
+        Destroy(gameObject);
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }
