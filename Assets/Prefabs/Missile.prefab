@@ -136,3 +136,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   tagToCompare: Enemy
+  explosionPS: {fileID: 8442475199696374098, guid: 118c1f90b951d5f448101e8b1ddcace4, type: 3}

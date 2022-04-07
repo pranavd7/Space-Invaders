@@ -6,6 +6,7 @@ public class Missile : MonoBehaviour
 {
     [SerializeField] int damage;
     [SerializeField] string tagToCompare;
+    [SerializeField] ParticleSystem explosionPS;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,6 +19,7 @@ public class Missile : MonoBehaviour
         }
         else if (collision.CompareTag("Missile"))
         {
+            if (explosionPS) Instantiate(explosionPS, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
