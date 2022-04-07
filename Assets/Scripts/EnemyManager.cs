@@ -24,6 +24,9 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Keep count of enemies alive
+    /// </summary>
     void RefreshNumEnemies()
     {
         OnEnemyDeath?.Invoke();

@@ -27,6 +27,9 @@ public class SpaceShip : MonoBehaviour
         HandleAttack();
     }
 
+    /// <summary>
+    /// Handle user input for movement
+    /// </summary>
     void HandleMovement()
     {
         float hInput = Input.GetAxisRaw("Horizontal");
@@ -45,6 +48,10 @@ public class SpaceShip : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Handle user input for attack
+    /// </summary>
     void HandleAttack()
     {
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > nextTimeToAttack)
@@ -53,6 +60,9 @@ public class SpaceShip : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Shoot missile
+    /// </summary>
     void Attack()
     {
         if (!missilePf) return;
