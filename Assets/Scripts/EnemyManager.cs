@@ -5,17 +5,31 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] Enemy[] enemies;
+    Enemy[] enemies;
+
+    int numEnemies;
 
     public Action OnEnemyDeath;
+    public Action OnAllEnemiesDead;
 
     // Start is called before the first frame update
     void Start()
     {
+        enemies = FindObjectsOfType<Enemy>();
+        numEnemies = enemies.Length;
         foreach (Enemy enemy in enemies)
         {
             Health health = enemy.GetComponent<Health>();
-            health.OnDeathEvent += () => OnEnemyDeath?.Invoke();
+            health.OnDeathEvent += RefreshNumEnemies;
         }
+    }
+
+    void RefreshNumEnemies()
+    {
+        OnEnemyDeath?.Invoke();
+
+        numEnemies--;
+        if (numEnemies <= 0)
+            OnAllEnemiesDead?.Invoke();
     }
 }

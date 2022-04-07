@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8658178302488274198}
   - component: {fileID: 3115779129565721729}
   - component: {fileID: 35323595582721491}
+  - component: {fileID: 924660052}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -136,3 +137,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 1
   deathExplosion: {fileID: 8442475199696374098, guid: 118c1f90b951d5f448101e8b1ddcace4, type: 3}
+--- !u!114 &924660052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6655654042862415182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86a9ebe022d1a324caafc1321378d37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackForce: 5
+  attackCooldown: 10
+  missilePf: {fileID: 8098679252214794329, guid: c5fd783759843c546924ea6967e71f02, type: 3}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] float attackForce = 10f;
+    [SerializeField] float attackForce;
     [SerializeField] float attackCooldown;
     [SerializeField] GameObject missilePf;
 
@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        nextTimeToAttack = Time.time;
+        nextTimeToAttack = Time.time + Random.Range(attackCooldown/2, attackCooldown);
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         {
             Rigidbody2D rb2d = Instantiate(missilePf, transform.position - 1f * transform.up, Quaternion.identity).GetComponent<Rigidbody2D>();
             if (rb2d) rb2d.AddForce(-attackForce * transform.up, ForceMode2D.Impulse);
-            nextTimeToAttack = Time.time + attackCooldown;
+            nextTimeToAttack = Time.time + Random.Range(attackCooldown / 2, attackCooldown);
         }
     }
 }

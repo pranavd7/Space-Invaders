@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Health playerHealth;
     [SerializeField] UIManager uiManager;
     [SerializeField] EnemyManager enemyManager;
+    [SerializeField] GameObject endScreen;
 
     int score;
 
@@ -21,13 +22,23 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        endScreen.SetActive(false);
+
         uiManager.InitializeHealth((int)playerHealth.maxHealth);
         uiManager.InitializeScore();
 
         playerHealth.OnDamageEvent += uiManager.RefreshHealthUI;
         playerHealth.OnIncreaseHealthEvent += uiManager.RefreshHealthUI;
+        playerHealth.OnDeathEvent += ShowEndScreen;
 
         enemyManager.OnEnemyDeath += () => uiManager.RefreshScoreUI(++score);
+        enemyManager.OnAllEnemiesDead += ShowEndScreen;
+    }
+
+    void ShowEndScreen()
+    {
+        Time.timeScale = 0;
+        endScreen.SetActive(true);
     }
 
     /// <summary>
@@ -36,6 +47,7 @@ public class GameManager : MonoBehaviour
     /// <param name="level"></param>
     public void LoadLevel(string level)
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(level);
     }
 
@@ -45,6 +57,28 @@ public class GameManager : MonoBehaviour
     /// <param name="level"></param>
     public void LoadLevel(int level)
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(level);
+    }
+
+    /// <summary>
+    /// Reload current scene
+    /// </summary>
+    public void RestartLevel()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    /// <summary>
+    /// Close the game
+    /// </summary>
+    public void Quit()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }
