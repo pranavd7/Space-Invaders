@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIManager uiManager;
     [SerializeField] EnemyManager enemyManager;
     [SerializeField] GameObject endScreen;
+    [SerializeField] TMPro.TMP_Text endScreenText;
 
     int score;
 
@@ -29,15 +30,22 @@ public class GameManager : MonoBehaviour
 
         playerHealth.OnDamageEvent += uiManager.RefreshHealthUI;
         playerHealth.OnIncreaseHealthEvent += uiManager.RefreshHealthUI;
-        playerHealth.OnDeathEvent += ShowEndScreen;
+        playerHealth.OnDeathEvent += ShowGameOverScreen;
 
         enemyManager.OnEnemyDeath += () => uiManager.RefreshScoreUI(++score);
-        enemyManager.OnAllEnemiesDead += ShowEndScreen;
+        enemyManager.OnAllEnemiesDead += ShowLevelCompletedScreen;
     }
 
-    void ShowEndScreen()
+    void ShowGameOverScreen()
     {
         Time.timeScale = 0;
+        endScreenText.text = "GAME OVER";
+        endScreen.SetActive(true);
+    }
+    void ShowLevelCompletedScreen()
+    {
+        Time.timeScale = 0;
+        endScreenText.text = "Level Completed!";
         endScreen.SetActive(true);
     }
 
@@ -75,10 +83,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void Quit()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
